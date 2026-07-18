@@ -1,15 +1,63 @@
-<!doctype html><html><body><button onclick="copySignature()">Copy Signature for Gmail</button><div id="signature"></div>
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Second Crew Email Signature</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#f3f4f6;padding:24px}
+.wrap{display:inline-block;background:#fff;padding:14px;border:1px solid #ddd}
+button{margin-bottom:12px;padding:10px 16px;border:0;border-radius:5px;background:#111;color:#fff;font-weight:700;cursor:pointer}
+.note{max-width:430px;margin-top:10px;font-size:12px;line-height:1.4;color:#444}
+img{display:block;border:0;outline:none;text-decoration:none}
+</style>
+</head>
+<body>
+<button onclick="copySignature()">Copy Signature for Gmail</button>
+<div class="wrap"><div id="signature"></div></div>
+<div class="note">High-resolution 2× images displayed at compact size for sharper text and graphics.</div>
+
 <script>
 const base=location.href.replace(/\/[^/]*$/,'/');
-const html=`<table cellpadding=0 cellspacing=0 style="border-collapse:collapse;width:430px"><tr><td rowspan=7><a href="https://www.hiresecondcrew.com"><img src="${base}left-logo.png" width="154"></a></td><td><a href="https://www.hiresecondcrew.com"><img src="${base}header.png" width="276"></a></td></tr>
-<tr><td><a href="tel:+19786092639"><img src="${base}phone.png" width="276"></a></td></tr>
-<tr><td><a href="mailto:pj@hiresecondcrew.com"><img src="${base}email.png" width="276"></a></td></tr>
-<tr><td><a href="https://www.hiresecondcrew.com"><img src="${base}website.png" width="276"></a></td></tr>
-<tr><td><a href="https://calendly.com/pj-hiresecondcrew"><img src="${base}book.png" width="276"></a></td></tr>
-<tr><td><a href="https://maps.google.com/?q=North+Andover+MA"><img src="${base}location.png" width="276"></a></td></tr>
-<tr><td><a href="https://www.hiresecondcrew.com"><img src="${base}mission.png" width="276"></a></td></tr>
-<tr><td colspan=2><img src="${base}benefits.png" width="430"></td></tr>
-<tr><td colspan=2><a href="https://calendly.com/pj-hiresecondcrew"><img src="${base}cta.png" width="430"></a></td></tr></table>`;
+const html=`<table role="presentation" cellpadding="0" cellspacing="0" border="0"
+style="border-collapse:collapse;width:430px;max-width:430px;background:#fff">
+<tr>
+<td rowspan="7" valign="top" style="width:154px;padding:0">
+<a href="https://www.hiresecondcrew.com"><img src="${base}left-logo.png" width="154" style="width:154px;height:auto"></a>
+</td>
+<td style="width:276px;padding:0"><a href="https://www.hiresecondcrew.com"><img src="${base}header.png" width="276" style="width:276px;height:auto"></a></td>
+</tr>
+<tr><td style="padding:0"><a href="tel:+19786092639"><img src="${base}phone.png" width="276" style="width:276px;height:auto"></a></td></tr>
+<tr><td style="padding:0"><a href="mailto:pj@hiresecondcrew.com"><img src="${base}email.png" width="276" style="width:276px;height:auto"></a></td></tr>
+<tr><td style="padding:0"><a href="https://www.hiresecondcrew.com"><img src="${base}website.png" width="276" style="width:276px;height:auto"></a></td></tr>
+<tr><td style="padding:0"><a href="https://calendly.com/pj-hiresecondcrew"><img src="${base}book.png" width="276" style="width:276px;height:auto"></a></td></tr>
+<tr><td style="padding:0"><a href="https://maps.google.com/?q=North+Andover+MA"><img src="${base}location.png" width="276" style="width:276px;height:auto"></a></td></tr>
+<tr><td style="padding:0"><a href="https://www.hiresecondcrew.com"><img src="${base}mission.png" width="276" style="width:276px;height:auto"></a></td></tr>
+<tr><td colspan="2" style="padding:0"><a href="https://www.hiresecondcrew.com"><img src="${base}benefits.png" width="430" style="width:430px;height:auto"></a></td></tr>
+<tr><td colspan="2" style="padding:0"><a href="https://calendly.com/pj-hiresecondcrew"><img src="${base}cta.png" width="430" style="width:430px;height:auto"></a></td></tr>
+</table>`;
 document.getElementById('signature').innerHTML=html;
-async function copySignature(){await navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'})})]);alert('Copied');}
-</script></body></html>
+
+async function copySignature(){
+  const text='P.J. Farnham | Founder & CEO | Second Crew\n(978) 609-2639\npj@hiresecondcrew.com\nhiresecondcrew.com';
+  try{
+    await navigator.clipboard.write([
+      new ClipboardItem({
+        'text/html':new Blob([html],{type:'text/html'}),
+        'text/plain':new Blob([text],{type:'text/plain'})
+      })
+    ]);
+    alert('Signature copied. Paste it directly into Gmail.');
+  }catch(e){
+    const r=document.createRange();
+    r.selectNode(document.getElementById('signature'));
+    const s=getSelection();
+    s.removeAllRanges();s.addRange(r);
+    document.execCommand('copy');
+    s.removeAllRanges();
+    alert('Signature copied. Paste it directly into Gmail.');
+  }
+}
+</script>
+</body>
+</html>
